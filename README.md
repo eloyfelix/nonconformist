@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/eloyfelix/nonconformist.svg?branch=master)](https://travis-ci.org/eloyfelix/nonconformist)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/eloyfelix/nonconformist/master?filepath=README.ipynb)
+
 # cbl-nonconformist
 
 This is a fork of [nonconformist](https://github.com/donlnz/nonconformist) keeping it up to date with new Python / scikit-learn versions.
