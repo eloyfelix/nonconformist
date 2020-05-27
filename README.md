@@ -1,4 +1,6 @@
-# nonconformist
+# cbl-nonconformist
+
+This is a fork of [nonconformist](https://github.com/donlnz/nonconformist) keeping it up to date with new Python / scikit-learn versions.
 
 Python implementation of the conformal prediction framework [1].
 
@@ -14,22 +16,19 @@ available under [/examples/](https://github.com/donlnz/nonconformist/tree/master
 
 ## Dependencies
 
-nonconformist requires:
+cbl-nonconformist requires:
 
-* Python (tested under Python 3.5)
+* Python >= 3.6
+* scikit-learn >= 0.20
 * numpy
 * scipy
-* scikit-learn
 
 ## User installation
 
-The easiest way to install the latest release version is via ```pip```:
 ```bash
-pip install nonconformist
-```
-The development version is available here on github:
-```bash
-git clone https://github.com/donlnz/nonconformist
+git clone https://github.com/eloyfelix/cbl-nonconformist
+cd cbl-nonconformist/
+python setup.py install
 ```
 
 

@@ -6,8 +6,6 @@ Nonconformity functions.
 
 # Authors: Henrik Linusson
 
-from __future__ import division
-
 import abc
 import numpy as np
 import sklearn.base

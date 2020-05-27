@@ -7,8 +7,8 @@ Aggregated conformal predictors
 # Authors: Henrik Linusson
 
 import numpy as np
-from sklearn.cross_validation import KFold, StratifiedKFold
-from sklearn.cross_validation import ShuffleSplit, StratifiedShuffleSplit
+from sklearn.model_selection import KFold, StratifiedKFold
+from sklearn.model_selection import ShuffleSplit, StratifiedShuffleSplit
 from sklearn.base import clone
 from nonconformist.base import BaseEstimator
 from nonconformist.util import calc_p
@@ -53,9 +53,9 @@ class CrossSampler(object):
 
     def gen_samples(self, y, n_samples, problem_type):
         if problem_type == "classification":
-            folds = StratifiedKFold(y, n_folds=n_samples)
+            folds = StratifiedKFold(n_splits=n_samples).split(y, y)
         else:
-            folds = KFold(y.size, n_folds=n_samples)
+            folds = KFold(n_splits=n_samples).split(y)
         for train, cal in folds:
             yield train, cal
 
@@ -81,12 +81,9 @@ class RandomSubSampler(object):
 
     def gen_samples(self, y, n_samples, problem_type):
         if problem_type == "classification":
-            splits = StratifiedShuffleSplit(
-                y, n_iter=n_samples, test_size=self.cal_portion
-            )
+            splits = StratifiedShuffleSplit(n_splits=n_samples, test_size=self.cal_portion).split(y, y)
         else:
-            splits = ShuffleSplit(y.size, n_iter=n_samples, test_size=self.cal_portion)
-
+            splits = ShuffleSplit(n_splits=n_samples, test_size=self.cal_portion).split(y)
         for train, cal in splits:
             yield train, cal
 
