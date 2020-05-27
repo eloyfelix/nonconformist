@@ -23,9 +23,9 @@ from nonconformist.nc import RegressorNc, AbsErrorErrFunc, RegressorNormalizer
 data = load_boston()
 
 idx = np.random.permutation(data.target.size)
-train = idx[:int(idx.size / 3)]
-calibrate = idx[int(idx.size / 3):int(2 * idx.size / 3)]
-test = idx[int(2 * idx.size / 3):]
+train = idx[: int(idx.size / 3)]
+calibrate = idx[int(idx.size / 3) : int(2 * idx.size / 3)]
+test = idx[int(2 * idx.size / 3) :]
 
 # -----------------------------------------------------------------------------
 # Without normalization
@@ -42,7 +42,7 @@ icp.calibrate(data.data[calibrate, :], data.target[calibrate])
 # Predict
 # -----------------------------------------------------------------------------
 prediction = icp.predict(data.data[test, :], significance=0.1)
-header = ['min','max','truth','size']
+header = ["min", "max", "truth", "size"]
 size = prediction[:, 1] - prediction[:, 0]
 table = np.vstack([prediction.T, data.target[test], size.T]).T
 df = pd.DataFrame(table, columns=header)
@@ -65,7 +65,7 @@ icp.calibrate(data.data[calibrate, :], data.target[calibrate])
 # Predict
 # -----------------------------------------------------------------------------
 prediction = icp.predict(data.data[test, :], significance=0.1)
-header = ['min','max','truth','size']
+header = ["min", "max", "truth", "size"]
 size = prediction[:, 1] - prediction[:, 0]
 table = np.vstack([prediction.T, data.target[test], size.T]).T
 df = pd.DataFrame(table, columns=header)

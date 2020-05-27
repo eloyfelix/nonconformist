@@ -6,6 +6,7 @@ docstring
 
 # Authors: Henrik Linusson
 
-__version__ = '2.1.0'
+__version__ = "2.1.0"
 
-__all__ = ['icp', 'nc', 'acp']
+__all__ = ["icp", "nc", "acp"]
+

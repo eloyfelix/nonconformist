@@ -25,33 +25,31 @@ from nonconformist.evaluation import reg_mean_errors
 data = load_diabetes()
 
 idx = np.random.permutation(data.target.size)
-train = idx[:int(2 * idx.size / 3)]
-test = idx[int(2 * idx.size / 3):]
+train = idx[: int(2 * idx.size / 3)]
+test = idx[int(2 * idx.size / 3) :]
 
 truth = data.target[test]
-columns = ['min', 'max', 'truth']
+columns = ["min", "max", "truth"]
 significance = 0.1
 
 # -----------------------------------------------------------------------------
 # Define models
 # -----------------------------------------------------------------------------
 
-models = {  'ACP-RandomSubSampler'  : AggregatedCp(
-                                    IcpRegressor(
-                                        RegressorNc(
-                                            RegressorAdapter(DecisionTreeRegressor()))),
-                                    RandomSubSampler()),
-            'ACP-CrossSampler'      : AggregatedCp(
-                                        IcpRegressor(
-                                            RegressorNc(
-                                                RegressorAdapter(DecisionTreeRegressor()))),
-                                        CrossSampler()),
-            'ACP-BootstrapSampler'  : AggregatedCp(
-                                        IcpRegressor(
-                                            RegressorNc(
-                                                RegressorAdapter(DecisionTreeRegressor()))),
-                                        BootstrapSampler())
-      }
+models = {
+    "ACP-RandomSubSampler": AggregatedCp(
+        IcpRegressor(RegressorNc(RegressorAdapter(DecisionTreeRegressor()))),
+        RandomSubSampler(),
+    ),
+    "ACP-CrossSampler": AggregatedCp(
+        IcpRegressor(RegressorNc(RegressorAdapter(DecisionTreeRegressor()))),
+        CrossSampler(),
+    ),
+    "ACP-BootstrapSampler": AggregatedCp(
+        IcpRegressor(RegressorNc(RegressorAdapter(DecisionTreeRegressor()))),
+        BootstrapSampler(),
+    ),
+}
 
 # -----------------------------------------------------------------------------
 # Train, predict and evaluate
@@ -59,12 +57,9 @@ models = {  'ACP-RandomSubSampler'  : AggregatedCp(
 for name, model in models.items():
     model.fit(data.data[train, :], data.target[train])
     prediction = model.predict(data.data[test, :])
-    prediction_sign = model.predict(data.data[test, :],
-                                    significance=significance)
+    prediction_sign = model.predict(data.data[test, :], significance=significance)
     table = np.vstack((prediction_sign.T, truth)).T
     df = pd.DataFrame(table, columns=columns)
-    print('\n{}'.format(name))
-    print('Error rate: {}'.format(reg_mean_errors(prediction,
-                                                  truth,
-                                                  significance)))
+    print("\n{}".format(name))
+    print("Error rate: {}".format(reg_mean_errors(prediction, truth, significance)))
     print(df)

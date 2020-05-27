@@ -27,38 +27,51 @@ from nonconformist.evaluation import reg_mean_errors, reg_median_size
 # -----------------------------------------------------------------------------
 data = load_iris()
 
-icp = OobCpClassifier(ClassifierNc(OobClassifierAdapter(RandomForestClassifier(n_estimators=100, oob_score=True))))
+icp = OobCpClassifier(
+    ClassifierNc(
+        OobClassifierAdapter(RandomForestClassifier(n_estimators=100, oob_score=True))
+    )
+)
 icp_cv = ClassIcpCvHelper(icp)
 
-scores = cross_val_score(icp_cv,
-                         data.data,
-                         data.target,
-                         iterations=5,
-                         folds=5,
-                         scoring_funcs=[class_mean_errors, class_avg_c],
-                         significance_levels=[0.05, 0.1, 0.2])
+scores = cross_val_score(
+    icp_cv,
+    data.data,
+    data.target,
+    iterations=5,
+    folds=5,
+    scoring_funcs=[class_mean_errors, class_avg_c],
+    significance_levels=[0.05, 0.1, 0.2],
+)
 
-print('Classification: iris')
-scores = scores.drop(['fold', 'iter'], axis=1)
-print(scores.groupby(['significance']).mean())
+print("Classification: iris")
+scores = scores.drop(["fold", "iter"], axis=1)
+print(scores.groupby(["significance"]).mean())
 
 # -----------------------------------------------------------------------------
 # Regression, absolute error
 # -----------------------------------------------------------------------------
 data = load_diabetes()
 
-icp = OobCpRegressor(RegressorNc(OobRegressorAdapter(RandomForestRegressor(n_estimators=100, oob_score=True))))
+icp = OobCpRegressor(
+    RegressorNc(
+        OobRegressorAdapter(RandomForestRegressor(n_estimators=100, oob_score=True))
+    )
+)
 icp_cv = RegIcpCvHelper(icp)
 
-scores = cross_val_score(icp_cv,
-                         data.data,
-                         data.target,
-                         iterations=5,
-                         folds=5,
-                         scoring_funcs=[reg_mean_errors, reg_median_size],
-                         significance_levels=[0.05, 0.1, 0.2])
+scores = cross_val_score(
+    icp_cv,
+    data.data,
+    data.target,
+    iterations=5,
+    folds=5,
+    scoring_funcs=[reg_mean_errors, reg_median_size],
+    significance_levels=[0.05, 0.1, 0.2],
+)
 
 
-print('Absolute error regression: diabetes')
-scores = scores.drop(['fold', 'iter'], axis=1)
-print(scores.groupby(['significance']).mean())
+print("Absolute error regression: diabetes")
+scores = scores.drop(["fold", "iter"], axis=1)
+print(scores.groupby(["significance"]).mean())
+
