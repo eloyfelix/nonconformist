@@ -129,12 +129,7 @@ class OobMixin(object):
 
     def _underlying_predict(self, x):
         # TODO: sub-sampling of ensemble for test patterns
-        oob = x == self.train_x
-
-        if hasattr(oob, "all"):
-            oob = oob.all()
-
-        if oob:
+        if x.shape == self.train_x.shape and (x == self.train_x).all():
             return self._oob_prediction()
         else:
             return super(OobMixin, self)._underlying_predict(x)
