@@ -9,16 +9,13 @@ from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsRegressor
 
-from nonconformist.base import ClassifierAdapter
-from nonconformist.nc import ClassifierNc
-from nonconformist.icp import IcpClassifier
+from nonconformist.base import ClassifierAdapter, RegressorAdapter
+from nonconformist.base import OobClassifierAdapter, OobRegressorAdapter
+
 from nonconformist.acp import AggregatedCp
 from nonconformist.acp import BootstrapSampler, CrossSampler, RandomSubSampler
 from nonconformist.acp import BootstrapConformalClassifier
 from nonconformist.acp import CrossConformalClassifier
-
-from nonconformist.base import ClassifierAdapter, RegressorAdapter
-from nonconformist.base import OobClassifierAdapter, OobRegressorAdapter
 
 from nonconformist.icp import IcpClassifier, IcpRegressor
 from nonconformist.icp import OobCpClassifier, OobCpRegressor
@@ -28,12 +25,10 @@ from nonconformist.nc import ClassifierNc, RegressorNc, RegressorNormalizer
 from nonconformist.nc import AbsErrorErrFunc, SignErrorErrFunc
 from nonconformist.cp import TcpClassifier
 
-from nonconformist.evaluation import class_mean_errors
 from nonconformist.evaluation import cross_val_score
 from nonconformist.evaluation import ClassIcpCvHelper, RegIcpCvHelper
 from nonconformist.evaluation import class_avg_c, class_mean_errors
 from nonconformist.evaluation import reg_mean_errors, reg_median_size
-
 
 
 class TestNonconformist(unittest.TestCase):
@@ -165,7 +160,6 @@ class TestNonconformist(unittest.TestCase):
         icp.fit(x[train_idx, :], y[train_idx])
         icp.calibrate(x[cal_idx, :], y[cal_idx])
 
-
         print(
             pd.DataFrame(
                 icp.predict_conf(x[test_idx, :]), columns=["Label", "Confidence", "Credibility"]
@@ -221,7 +215,6 @@ class TestNonconformist(unittest.TestCase):
             significance_levels=[0.05, 0.1, 0.2],
         )
 
-
         print("Absolute error regression: diabetes")
         scores = scores.drop(["fold", "iter"], axis=1)
         print(scores.groupby(["significance"]).mean())
@@ -248,7 +241,6 @@ class TestNonconformist(unittest.TestCase):
             scoring_funcs=[reg_mean_errors, reg_median_size],
             significance_levels=[0.05, 0.1, 0.2],
         )
-
 
         print("Normalized absolute error regression: diabetes")
         scores = scores.drop(["fold", "iter"], axis=1)
@@ -445,7 +437,6 @@ class TestNonconformist(unittest.TestCase):
             scoring_funcs=[reg_mean_errors, reg_median_size],
             significance_levels=[0.05, 0.1, 0.2],
         )
-
 
         print("Absolute error regression: diabetes")
         scores = scores.drop(["fold", "iter"], axis=1)
