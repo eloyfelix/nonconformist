@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from distutils.core import setup
+from setuptools import setup
 import nonconformist
 
 setup(
@@ -10,10 +10,9 @@ setup(
     description="Python implementation of the conformal prediction framework.",
     author="Henrik Linusson",
     author_email="henrik.linusson@gmail.com",
-    url="https://github.com/donlnz/nonconformist",
-    download_url="https://github.com/donlnz/nonconformist/tarball/"
-    + nonconformist.__version__,
-    install_requires=["numpy", "scikit-learn", "scipy", "pandas"],
+    url="https://github.com/eloyfelix/nonconformist",
+    download_url="",
+    install_requires=["numpy", "scikit-learn>=0.20", "scipy", "pandas"],
     keywords=[
         "conformal prediction",
         "machine learning",

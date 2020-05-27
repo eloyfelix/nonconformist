@@ -73,7 +73,7 @@ class ClassIcpCvHelper(BaseIcpCvHelper, ClassifierMixin):
         super(ClassIcpCvHelper, self).__init__(icp, calibration_portion)
 
     def fit(self, x, y):
-        split = StratifiedShuffleSplit(n_splits=1, test_size=self.calibration_portion).split(y)
+        split = StratifiedShuffleSplit(n_splits=1, test_size=self.calibration_portion).split(y, y)
         for train, cal in split:
             self.icp.fit(x[train, :], y[train])
             self.icp.calibrate(x[cal, :], y[cal])
